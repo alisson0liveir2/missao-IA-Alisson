@@ -5,8 +5,6 @@ const caixaResultado = document.querySelector(".caixa-resultado");
 const textoResultado = document.querySelector(".texto-resultado");
 
 
-
-
 const perguntas = [
     {
         enunciado: " Qual tecnologia você acredita ser mais eficiente para o monitoramento de lavouras?",
@@ -80,37 +78,36 @@ let perguntaAtual;
 let historiaFinal = " ";
 
 function mostraPergunta(){
-    perguntaAtual = perguntas[atual];
-    caixaPerguntas.textContent = perguntaAtual.enunciado;
-}
 
-function mostraAlternativas(){
     if (atual >= perguntas.length){
         mostraResultado();
         return;
     }
 
-    perguntaAtual = perguntas
+    perguntaAtual = perguntas[atual];
+    caixaPerguntas.textContent = perguntaAtual.enunciado;
+    caixaAlternativas.textContent = " ";
+    mostraAlternativas();
+}
 
+function mostraAlternativas(){
     for (const alternativa of perguntaAtual.alternativas){
         const botaoAlternativas = document.createElement("button");
         botaoAlternativas.textContent = alternativa.texto;
-        botaoAlternativas.addEventListener("click", () => respostaSelecionada(alternativa))
-            
-        }
+        botaoAlternativas.addEventListener("click", () => respostaSelecionada(alternativa));
         caixaAlternativas.appendChild(botaoAlternativas);
-    }
+    } 
 }
 
 function respostaSelecionada(opcaoSelecionada){
     const afirmacoes = opcaoSelecionada.afirmacao;
     historiaFinal += afirmacoes + " ";
-    atual++
+    atual++;
     mostraPergunta();
 }
 
 function mostraResultado(){
-    caixaPerguntas.textContent = "se fosse possível ...";
+    caixaPerguntas.textContent = "Se fosse possível traduzir sua forma de aprender em palavras, diríamos que...";
     textoResultado.textContent = historiaFinal;
     caixaAlternativas.textContent = " ";
 }
